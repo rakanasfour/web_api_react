@@ -1,11 +1,11 @@
 
-import Table from"@/components/Table"
+import ProductPage from"@/components/ProductPage"
 export default function Items() {
     return (
         
         
 <div>
-    <Table></Table>
+    <ProductPage></ProductPage>
 </div>
 
     );

@@ -1,25 +1,8 @@
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/typography'),
-    ],
-  }
-  ```
-*/
 'use client'
-
-import  {fetchChannel2}  from '@/services/apiService';
-import { useEffect, useState } from 'react';
+import { useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { Radio, RadioGroup } from '@headlessui/react'
 import { CurrencyDollarIcon, GlobeAmericasIcon } from '@heroicons/react/24/outline'
-
 const product = {
   name: 'Basic Tee',
   price: '$35',
@@ -77,99 +60,30 @@ const policies = [
   { name: 'International delivery', icon: GlobeAmericasIcon, description: 'Get your order in 2 years' },
   { name: 'Loyalty rewards', icon: CurrencyDollarIcon, description: "Don't look at other tees" },
 ]
-
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Example() {
-  const [selectedColor, setSelectedColor] = useState(product.colors[0])
+
+export default function Example( {data} ) {
+ 
+
+
+const [selectedColor, setSelectedColor] = useState(product.colors[0])
   const [selectedSize, setSelectedSize] = useState(product.sizes[2])
 
-
-  const [products, setProducts] = useState([]);
-  const getAllProducts = async () => {
-    try {
-      const data = await fetchChannel2();
-      const foodList = Object.keys(data).map((key) => ({
-        id: key,
-        ...data[key],
-      }));
-      setProducts(foodList);
-      console.log(foodList);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    }
-  };
-  useEffect(() => {
-    getAllProducts();
-  }, []);
-
-
   return (
-
-    
     <div className="bg-white">
-      
       <div className="pb-16 pt-6 sm:pb-24">
-        <nav aria-label="Breadcrumb" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <ol role="list" className="flex items-center space-x-4">
-            {product.breadcrumbs.map((breadcrumb) => (
-              <li key={breadcrumb.id}>
-                <div className="flex items-center">
-                  <a href={breadcrumb.href} className="mr-4 text-sm font-medium text-gray-900">
-                    {breadcrumb.name}
-                  </a>
-                  <svg viewBox="0 0 6 20" aria-hidden="true" className="h-5 w-auto text-gray-300">
-                    <path d="M4.878 4.34H3.551L.27 16.532h1.327l3.281-12.19z" fill="currentColor" />
-                  </svg>
-                </div>
-              </li>
-            ))}
-            <li className="text-sm">
-              <a href={product.href} aria-current="page" className="font-medium text-gray-500 hover:text-gray-600">
-                {product.name}
-              </a>
-            </li>
-          </ol>
-        </nav>
+        
         <div className="mx-auto mt-8 max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
           <div className="lg:grid lg:auto-rows-min lg:grid-cols-12 lg:gap-x-8">
             <div className="lg:col-span-5 lg:col-start-8">
               <div className="flex justify-between">
-                <h1 className="text-xl font-medium text-gray-900">{product.name}</h1>
-                <p className="text-xl font-medium text-gray-900">{product.price}</p>
+                <h1 className="text-xl font-medium text-gray-900">{data.itemName}</h1>
+                <p className="text-xl font-medium text-gray-900">{data.itemBasePrice}</p>
               </div>
-              {/* Reviews */}
-              <div className="mt-4">
-                <h2 className="sr-only">Reviews</h2>
-                <div className="flex items-center">
-                  <p className="text-sm text-gray-700">
-                    {product.rating}
-                    <span className="sr-only"> out of 5 stars</span>
-                  </p>
-                  <div className="ml-1 flex items-center">
-                    {[0, 1, 2, 3, 4].map((rating) => (
-                      <StarIcon
-                        key={rating}
-                        aria-hidden="true"
-                        className={classNames(
-                          product.rating > rating ? 'text-yellow-400' : 'text-gray-200',
-                          'h-5 w-5 shrink-0',
-                        )}
-                      />
-                    ))}
-                  </div>
-                  <div aria-hidden="true" className="ml-4 text-sm text-gray-300">
-                    ·
-                  </div>
-                  <div className="ml-4 flex">
-                    <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                      See all {product.reviewCount} reviews
-                    </a>
-                  </div>
-                </div>
-              </div>
+          
             </div>
 
             {/* Image gallery */}
@@ -193,38 +107,6 @@ export default function Example() {
 
             <div className="mt-8 lg:col-span-5">
               <form>
-                {/* Color picker */}
-                <div>
-                  <h2 className="text-sm font-medium text-gray-900">Color</h2>
-
-                  <fieldset aria-label="Choose a color" className="mt-2">
-                    <RadioGroup
-                      value={selectedColor}
-                      onChange={setSelectedColor}
-                      className="flex items-center space-x-3"
-                    >
-                      {product.colors.map((color) => (
-                        <Radio
-                          key={color.name}
-                          value={color}
-                          aria-label={color.name}
-                          className={classNames(
-                            color.selectedColor,
-                            'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-none data-[checked]:ring-2 data-[focus]:data-[checked]:ring data-[focus]:data-[checked]:ring-offset-1',
-                          )}
-                        >
-                          <span
-                            aria-hidden="true"
-                            className={classNames(
-                              color.bgColor,
-                              'h-8 w-8 rounded-full border border-black border-opacity-10',
-                            )}
-                          />
-                        </Radio>
-                      ))}
-                    </RadioGroup>
-                  </fieldset>
-                </div>
 
                 {/* Size picker */}
                 <div className="mt-8">
@@ -271,18 +153,20 @@ export default function Example() {
                 <h2 className="text-sm font-medium text-gray-900">Description</h2>
 
                 <div
-                  dangerouslySetInnerHTML={{ __html: product.description }}
-                  className="prose prose-sm mt-4 text-gray-500"
+                  dangerouslySetInnerHTML={{ __html: data.itemDescription }}
+                  className="mt-4 space-y-4 text-sm/6 text-gray-500"
                 />
               </div>
 
               <div className="mt-8 border-t border-gray-200 pt-8">
                 <h2 className="text-sm font-medium text-gray-900">Fabric &amp; Care</h2>
 
-                <div className="prose prose-sm mt-4 text-gray-500">
-                  <ul role="list">
+                <div className="mt-4">
+                  <ul role="list" className="list-disc space-y-1 pl-5 text-sm/6 text-gray-500 marker:text-gray-300">
                     {product.details.map((item) => (
-                      <li key={item}>{item}</li>
+                      <li key={item} className="pl-2">
+                        {item}
+                      </li>
                     ))}
                   </ul>
                 </div>
@@ -298,7 +182,7 @@ export default function Example() {
                   {policies.map((policy) => (
                     <div key={policy.name} className="rounded-lg border border-gray-200 bg-gray-50 p-6 text-center">
                       <dt>
-                        <policy.icon aria-hidden="true" className="mx-auto h-6 w-6 shrink-0 text-gray-400" />
+                        <policy.icon aria-hidden="true" className="mx-auto size-6 shrink-0 text-gray-400" />
                         <span className="mt-4 text-sm font-medium text-gray-900">{policy.name}</span>
                       </dt>
                       <dd className="mt-1 text-sm text-gray-500">{policy.description}</dd>
@@ -310,6 +194,52 @@ export default function Example() {
           </div>
         </div>
       </div>
+
+      <div className="px-4 sm:px-6 lg:px-8">
+
+      <div className="mt-8 flow-root">
+        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+            <table className="min-w-full divide-y divide-gray-300">
+              <thead>
+                <tr>
+                  <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
+                  item id
+                  </th>
+                  <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
+                  itemSku
+                  </th>
+                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
+                  item Description
+                  </th>
+
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200 bg-white">
+                
+               
+                  <tr key={data.itemId}>
+                    
+                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+                      <div className="text-gray-900">{data.itemId}</div>
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+                      <div className="text-gray-900">{data.itemSku}</div>
+                    </td>
+                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+                      <div className="text-gray-900">{data.itemDescription}</div>
+                    </td>
+          
+                  </tr>
+               
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      
+    </div>
     </div>
   )
 }

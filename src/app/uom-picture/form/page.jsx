@@ -1,5 +1,5 @@
 "use client";
-import InputForm from"@/components/InputForm"
+import InputForm from"@/components/uompicture/InputForm"
 export default function form() {
     return (
         
