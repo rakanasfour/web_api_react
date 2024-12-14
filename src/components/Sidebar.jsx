@@ -20,7 +20,6 @@ const navigation = [
   { name: 'model_pictures', href: '/model-picture', icon: UsersIcon, current: false },
   { name: 'UOM', href: '/uom', icon: UsersIcon, current: false },
   { name: 'Uom_pictures', href: '/uom-picture', icon: UsersIcon, current: false },
-  { name: 'Brands', href: '/brand', icon: FolderIcon, current: false },
   { name: 'Brand_pictures', href: '/brand-picture', icon: FolderIcon, current: false },
   { name: 'Distributors', href: '/distributor', icon: CalendarIcon, current: false },
   { name: 'Packaging', href: '/packaging', icon: DocumentDuplicateIcon, current: false },

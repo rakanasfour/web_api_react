@@ -49,54 +49,66 @@ export default function Example({ data }) {
                    Quantity
                   </th>
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                    Status
+                  Price
                   </th>
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                    Price
+                    Status
                   </th>
                   <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-0">
                     <span className="sr-only">Edit</span>
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200 bg-white">
-                {data.map((item) => (
-                  <tr key={item.itemId}>
-                    
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <div className="text-gray-900">{item.itemName}</div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <div className="text-gray-900">{item.itemSku}</div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <div className="text-gray-900">{item.itemType}</div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <div className="text-gray-900">{item.itemQuantity}</div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+           <tbody className="divide-y divide-gray-200 bg-white">
+              {data.map((item) => (
+                <tr key={item.itemId}>
+                  <td className="whitespace-nowrap py-5 pl-4 pr-3 text-sm sm:pl-0">
+                    <div className="flex items-center space-x-3">
+                      {item.itemPictures.map((itemPicture) => (
+                        <div key={itemPicture.id} className="w-11 h-11 shrink-0">
+                          <img
+                            alt={itemPicture.altText || "Item Picture"}
+                            src={itemPicture.itemPictureMain}
+                            className="w-full h-full rounded-full"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+                    <div className="text-gray-900">{item.itemName}</div>
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+                    <div className="text-gray-900">{item.itemSku}</div>
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+                    <div className="text-gray-900">{item.itemType}</div>
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+                    <div className="text-gray-900">{item.itemQuantity}</div>
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+                    <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
                       {item.itemAvailability}
-                      </span>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">{item.itemName}</td>
-                         <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <div className="text-gray-900">{item.itemQuantity}</div>
-                    </td>
-                    <td className="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                      <a href={`/item/display/${item.itemId}`} className="text-indigo-600 hover:text-indigo-900">
-                        select
-                      </a>
-                    </td>
-                    <td className="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                      <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                        Edit
-                      </a>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+                    </span>
+                  </td>
+                  <td className="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                    <a
+                      href={`/item/display/${item.itemId}`}
+                      className="text-indigo-600 hover:text-indigo-900"
+                    >
+                      Select
+                    </a>
+                  </td>
+                  <td className="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                    <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                      Edit
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+
             </table>
           </div>
         </div>

@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { Radio, RadioGroup } from '@headlessui/react'
 import { CurrencyDollarIcon, GlobeAmericasIcon } from '@heroicons/react/24/outline'
+import Head from 'next/head'
 const product = {
   name: 'Basic Tee',
   price: '$35',
@@ -91,13 +92,13 @@ const [selectedColor, setSelectedColor] = useState(product.colors[0])
               <h2 className="sr-only">Images</h2>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-3 lg:gap-8">
-                {product.images.map((image) => (
+                {data.itemPictures.map((itemPicture) => (
                   <img
-                    key={image.id}
-                    alt={image.imageAlt}
-                    src={image.imageSrc}
+                    key={itemPicture.itemPictureId}
+                    alt={itemPicture.itemPictureMain}
+                    src={itemPicture.itemPictureMain}
                     className={classNames(
-                      image.primary ? 'lg:col-span-2 lg:row-span-2' : 'hidden lg:block',
+                      itemPicture.itemPictureMain ? 'lg:col-span-2 lg:row-span-2' : 'hidden lg:block',
                       'rounded-lg',
                     )}
                   />
@@ -108,37 +109,41 @@ const [selectedColor, setSelectedColor] = useState(product.colors[0])
             <div className="mt-8 lg:col-span-5">
               <form>
 
-                {/* Size picker */}
-                <div className="mt-8">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-sm font-medium text-gray-900">Size</h2>
-                    <a href="#" className="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                      See sizing chart
-                    </a>
-                  </div>
+              
 
-                  <fieldset aria-label="Choose a size" className="mt-2">
+                <div className="sm:flex sm:justify-between">
+                  {/* Size selector */}
+                  <fieldset>
+                    <legend className="block text-sm font-medium text-gray-700">Size</legend>
                     <RadioGroup
                       value={selectedSize}
                       onChange={setSelectedSize}
-                      className="grid grid-cols-3 gap-3 sm:grid-cols-6"
+                      className="mt-1 grid grid-cols-1 gap-4 sm:grid-cols-2"
                     >
-                      {product.sizes.map((size) => (
-                        <Radio
-                          key={size.name}
-                          value={size}
-                          disabled={!size.inStock}
-                          className={classNames(
-                            size.inStock ? 'cursor-pointer focus:outline-none' : 'cursor-not-allowed opacity-25',
-                            'flex items-center justify-center rounded-md border border-gray-200 bg-white px-3 py-3 text-sm font-medium uppercase text-gray-900 hover:bg-gray-50 data-[checked]:border-transparent data-[checked]:bg-indigo-600 data-[checked]:text-white data-[focus]:ring-2 data-[focus]:ring-indigo-500 data-[focus]:ring-offset-2 data-[checked]:hover:bg-indigo-700 sm:flex-1',
-                          )}
-                        >
-                          {size.name}
-                        </Radio>
+                      {data.uoms.map((uom) => (
+                 <Radio
+                key={uom.uomId}
+                as="div"
+                value={uom}
+                aria-label={uom.uomType}
+                aria-description={uom.uomType}
+                className="group relative block cursor-pointer rounded-lg border border-gray-300 p-4 focus:outline-none data-[focus]:ring-2 data-[focus]:ring-indigo-500"
+              >
+                <p className="text-base font-medium text-gray-900">{uom.uomType}</p>
+                <p className="mt-1 text-sm text-gray-500">
+                  {data.itemQuantity && uom.itemQuantity ? data.itemQuantity * uom.itemQuantity : 'N/A'}
+                </p>
+                <p className="mt-1 text-sm text-gray-500">{data.itemType}</p>
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-indigo-500"
+                />
+              </Radio>
+
                       ))}
                     </RadioGroup>
                   </fieldset>
-                </div>
+                  </div>
 
                 <button
                   type="submit"
@@ -159,13 +164,13 @@ const [selectedColor, setSelectedColor] = useState(product.colors[0])
               </div>
 
               <div className="mt-8 border-t border-gray-200 pt-8">
-                <h2 className="text-sm font-medium text-gray-900">Fabric &amp; Care</h2>
+                <h2 className="text-sm font-medium text-gray-900">Sales &amp; Category</h2>
 
                 <div className="mt-4">
                   <ul role="list" className="list-disc space-y-1 pl-5 text-sm/6 text-gray-500 marker:text-gray-300">
-                    {product.details.map((item) => (
-                      <li key={item} className="pl-2">
-                        {item}
+                    {data.salesCategories.map((salesCategory) => (
+                      <li key={salesCategory.salesCategoryId} className="pl-2">
+                        {salesCategory.salesCategoryName}
                       </li>
                     ))}
                   </ul>
@@ -174,18 +179,20 @@ const [selectedColor, setSelectedColor] = useState(product.colors[0])
 
               {/* Policies */}
               <section aria-labelledby="policies-heading" className="mt-10">
-                <h2 id="policies-heading" className="sr-only">
-                  Our Policies
-                </h2>
+      
+                <h2 className="text-sm font-medium text-gray-900">Attribute</h2>
+
 
                 <dl className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-                  {policies.map((policy) => (
-                    <div key={policy.name} className="rounded-lg border border-gray-200 bg-gray-50 p-6 text-center">
+                  {data.attributes.map((attribute) => (
+                    <div key={attribute.attributeId} className="rounded-lg border border-gray-200 bg-gray-50 p-6 text-center">
                       <dt>
-                        <policy.icon aria-hidden="true" className="mx-auto size-6 shrink-0 text-gray-400" />
-                        <span className="mt-4 text-sm font-medium text-gray-900">{policy.name}</span>
+                       
+                        <span className="mt-4 text-sm font-medium text-gray-900">{attribute.attributeName}</span>
                       </dt>
-                      <dd className="mt-1 text-sm text-gray-500">{policy.description}</dd>
+                      <dd className="mt-1 text-sm text-gray-500">{attribute.attributeType}</dd>
+                      <dd className="mt-1 text-sm text-gray-500">{attribute.attributeAssistText}</dd>
+
                     </div>
                   ))}
                 </dl>
@@ -196,47 +203,6 @@ const [selectedColor, setSelectedColor] = useState(product.colors[0])
       </div>
 
       <div className="px-4 sm:px-6 lg:px-8">
-
-      <div className="mt-8 flow-root">
-        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-            <table className="min-w-full divide-y divide-gray-300">
-              <thead>
-                <tr>
-                  <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
-                  item id
-                  </th>
-                  <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
-                  itemSku
-                  </th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                  item Description
-                  </th>
-
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-200 bg-white">
-                
-               
-                  <tr key={data.itemId}>
-                    
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <div className="text-gray-900">{data.itemId}</div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <div className="text-gray-900">{data.itemSku}</div>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <div className="text-gray-900">{data.itemDescription}</div>
-                    </td>
-          
-                  </tr>
-               
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
 
       
     </div>
