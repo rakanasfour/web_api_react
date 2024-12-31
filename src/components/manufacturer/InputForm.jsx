@@ -1,9 +1,25 @@
-
+import React, { useState } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/16/solid'
 
-export default function Example() {
+export default function Example({ onSubmit }) {
+  const [manufacturerName, setManufacturerName] = useState("");
+  const [manufacturerDescription, setModelDescription] = useState("");
+  const [manufacturerStatus, setManufacturerStatus] = useState("ACTIVE");
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!manufacturerName || !manufacturerDescription || !manufacturerStatus) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    const formData = { manufacturerName, manufacturerDescription,manufacturerStatus };
+    onSubmit(formData); // Pass data to parent or API call
+  };
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base/7 font-semibold text-gray-900">Item form</h2>
@@ -18,6 +34,7 @@ export default function Example() {
                 <input
                   id="first-name"
                   name="first-name"
+                  onChange={(e) => setManufacturerName(e.target.value)}
                   type="text"
                   autoComplete="given-name"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
@@ -33,6 +50,7 @@ export default function Example() {
                 <input
                   id="last-name"
                   name="last-name"
+                  onChange={(e) => setModelDescription(e.target.value)}
                   type="text"
                   autoComplete="family-name"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
@@ -49,12 +67,13 @@ export default function Example() {
                 <select
                   id="country"
                   name="country"
+                  onChange={(e) => setManufacturerStatus(e.target.value)}
                   autoComplete="country-name"
                   className="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 >
 
-                  <option>ACTIVE</option>
-                  <option>INACTIVE</option>
+                  <option value="ACTIVE">ACTIVE</option>
+                  <option value="INACTIVE">INACTIVE</option>
    
                 </select>
                 <ChevronDownIcon

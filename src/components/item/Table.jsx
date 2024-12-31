@@ -36,6 +36,9 @@ export default function Example({ data }) {
             <table className="min-w-full divide-y divide-gray-300">
               <thead>
                 <tr>
+                 <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
+                    Picture
+                  </th>
                   <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
                     Name
                   </th>
@@ -43,13 +46,10 @@ export default function Example({ data }) {
                    Sku
                   </th>
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                   Type
+                   Quantity Available
                   </th>
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                   Quantity
-                  </th>
-                  <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-                  Price
+                  Base Price
                   </th>
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                     Status
@@ -75,26 +75,39 @@ export default function Example({ data }) {
                       ))}
                     </div>
                   </td>
+      
                   <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
                     <div className="text-gray-900">{item.itemName}</div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
                     <div className="text-gray-900">{item.itemSku}</div>
                   </td>
+
+
                   <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                    <div className="text-gray-900">{item.itemType}</div>
+                  {item.uoms.map((uom) => (
+                    <div key={uom.uomId} className="text-gray-900">{uom.uomType}</div>
+                  ))}
                   </td>
+
+
                   <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                    <div className="text-gray-900">{item.itemQuantity}</div>
+                    {item.uoms?.[0]?.manufacturerPricing?.pricingList ? (
+                      <div className="text-gray-900">{item.uoms[0].manufacturerPricing.pricingList}</div>
+                    ) : (
+                      <div className="text-gray-500">N/A</div>
+                    )}
                   </td>
+                  
+      
                   <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
                     <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                      {item.itemAvailability}
+                      {item.itemStatus}
                     </span>
                   </td>
                   <td className="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                     <a
-                      href={`/item/display/${item.itemId}`}
+                      href={`item/display/${item.itemId}`}
                       className="text-indigo-600 hover:text-indigo-900"
                     >
                       Select

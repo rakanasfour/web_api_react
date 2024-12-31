@@ -13,26 +13,6 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 
-const navigation = [
-  { name: 'Items', href: '/item', icon: HomeIcon, current: true },
-  { name: 'item_pictures', href: '/item-picture', icon: UsersIcon, current: false },
-  { name: 'Models', href: '/model', icon: UsersIcon, current: false },
-  { name: 'model_pictures', href: '/model-picture', icon: UsersIcon, current: false },
-  { name: 'UOM', href: '/uom', icon: UsersIcon, current: false },
-  { name: 'Uom_pictures', href: '/uom-picture', icon: UsersIcon, current: false },
-  { name: 'Brand_pictures', href: '/brand-picture', icon: FolderIcon, current: false },
-  { name: 'Distributors', href: '/distributor', icon: CalendarIcon, current: false },
-  { name: 'Packaging', href: '/packaging', icon: DocumentDuplicateIcon, current: false },
-  { name: 'Shipping_dimensions', href: '/shipping-dimension', icon: ChartPieIcon, current: false },
-  { name: 'Compliance_categories', href: '/Compliance_category', icon: ChartPieIcon, current: false },
-  { name: 'Manufacturer_pricing', href: '/manufacturer-pricing', icon: ChartPieIcon, current: false },
-  { name: 'manufacturer', href: '/manufacturer', icon: ChartPieIcon, current: false },
-  { name: 'Manufacturer_facilities', href: '/manufacturer-facility', icon: ChartPieIcon, current: false },
-  { name: 'Sales_categories', href: '/sales-category', icon: ChartPieIcon, current: false },
-  { name: 'Document_Storage', href: '/document-storage', icon: ChartPieIcon, current: false },
-
-
-]
 const teams = [
   { id: 1, name: 'Heroicons', href: '#', initial: 'H', current: false },
   { id: 2, name: 'Tailwind Labs', href: '#', initial: 'T', current: false },
@@ -43,7 +23,33 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
+
 export default function Example() {
+  const navigation = [
+    { name: 'Items', href: '/item', icon: HomeIcon, current: true },
+    { name: 'Items-customer', href: '/customer/item', icon: HomeIcon, current: false },
+    { name: 'Items-retail', href: '/retail/item', icon: HomeIcon, current: false },
+    { name: 'Items-wholesale', href: '/wholesale/item', icon: HomeIcon, current: false },
+    { name: 'item_pictures', href: '/item-picture', icon: UsersIcon, current: false },
+    { name: 'Models', href: '/model', icon: UsersIcon, current: false },
+    { name: 'model_pictures', href: '/model-picture', icon: UsersIcon, current: false },
+    { name: 'UOM', href: '/uom', icon: UsersIcon, current: false },
+    { name: 'Uom_pictures', href: '/uom-picture', icon: UsersIcon, current: false },
+    { name: 'Brand_pictures', href: '/brand-picture', icon: FolderIcon, current: false },
+    { name: 'Distributors', href: '/distributor', icon: CalendarIcon, current: false },
+    { name: 'Packaging', href: '/packaging', icon: DocumentDuplicateIcon, current: false },
+    { name: 'Shipping_dimensions', href: '/shipping-dimension', icon: ChartPieIcon, current: false },
+    { name: 'Compliance_categories', href: '/Compliance_category', icon: ChartPieIcon, current: false },
+    { name: 'Manufacturer_pricing', href: '/manufacturer-pricing', icon: ChartPieIcon, current: false },
+    { name: 'manufacturer', href: '/manufacturer', icon: ChartPieIcon, current: false },
+    { name: 'Manufacturer_facilities', href: '/manufacturer-facility', icon: ChartPieIcon, current: false },
+    { name: 'Sales_categories', href: '/sales-category', icon: ChartPieIcon, current: false },
+    { name: 'Document_Storage', href: '/document-storage', icon: ChartPieIcon, current: false },
+    { name: 'Classes', href: '/class', icon: ChartPieIcon, current: false },
+
+  
+  
+  ]
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (

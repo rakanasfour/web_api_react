@@ -1,9 +1,26 @@
 
+import React, { useState } from 'react';
+
+export default function Example({ onSubmit }) {
+
+  const [salesCategoryName, setSalesCategoryName] = useState("");
+  const [salesCategoryMeasurementType, setSalesCategoryMeasurementType] = useState("");
+  const [salesCategorySystemMeasurement, setSalesCategorySystemMeasurement] = useState("");
 
 
-export default function Example() {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!salesCategoryName || !salesCategoryMeasurementType || !salesCategorySystemMeasurement) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    const formData = { salesCategoryName, salesCategoryMeasurementType,salesCategorySystemMeasurement };
+    onSubmit(formData); // Pass data to parent or API call
+  };
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base/7 font-semibold text-gray-900">salesCategory form</h2>
@@ -18,10 +35,15 @@ export default function Example() {
                 <input
                   id="salesCategoryName"
                   name="salesCategoryName"
+                  value={salesCategoryName}
+                  onChange={(e) => setSalesCategoryName(e.target.value)}
                   type="text"
                   autoComplete="given-name"
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
+
+
+ 
               </div>
             </div>
 
@@ -30,28 +52,41 @@ export default function Example() {
               sales Category Measurement Type
               </label>
               <div className="mt-2">
-                <input
-                  id="salesCategoryMeasurementType"
-                  name="salesCategoryMeasurementType"
-                  type="text"
-                  autoComplete="family-name"
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                />
+              <select
+              name="salesCategoryMeasurementType"
+              value={salesCategoryMeasurementType}
+              onChange={(e) => setSalesCategoryMeasurementType(e.target.value)}
+              className="form-select"
+            >
+            <option value="" disabled>Select a measurement type</option>
+            <option value="COUNT">COUNT</option>
+            <option value="WEIGHT">WEIGHT</option>
+            <option value="VOLUME">VOLUME</option>
+            </select>
               </div>
             </div>
+  
+
+
   
             <div className="col-span-full">
               <label htmlFor="salesCategorySystemMeasurement" className="block text-sm/6 font-medium text-gray-900">
               sales Category System Measurement
               </label>
               <div className="mt-2">
-                <textarea
-                  id="salesCategorySystemMeasurement"
-                  name="salesCategorySystemMeasurement"
-                  rows={3}
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                  defaultValue={''}
-                />
+
+
+              <select
+              name="salesCategorySystemMeasurement"
+             value={salesCategorySystemMeasurement}
+              onChange={(e) => setSalesCategorySystemMeasurement(e.target.value)}
+              className="form-select"
+            >
+                   <option value="" disabled>Select a system measurement</option>
+                  <option value="METRIC">METRIC</option>
+                  <option value="IMPERIAL">IMPERIAL</option>
+            </select>
+   
               </div>
               <p className="mt-3 text-sm/6 text-gray-600">please describe the item.</p>
             </div>

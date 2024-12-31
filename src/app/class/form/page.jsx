@@ -1,5 +1,5 @@
 "use client";
-import InputForm from"@/components/salescategory/InputForm"
+import InputForm from"@/components/class/InputForm"
 import axios from "axios";
 export default function form() {
 
@@ -8,9 +8,9 @@ export default function form() {
         console.log("Form Data Submited:", formData);
 
         try {
-            const respose = await axios.post("http://localhost:8080/api/sales-categories/request",formData);
-            console.log("sales category was created successfully:", respose.data);
-            alert("sales category created Successfully !");
+            const respose = await axios.post("http://localhost:8080/api/classes/request",formData);
+            console.log("class was created successfully:", respose.data);
+            alert("class created Successfully !");
 
         } catch (error){
             console.error("error created Manufacturer facilites:", error);

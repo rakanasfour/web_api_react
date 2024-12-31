@@ -3,11 +3,11 @@
 //import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ProductPage from "@/components/ProductPage";
-import { fetchItemByIdAdmin } from "@/services/api/itemAPIService";
+import { fetchItemById } from "@/services/api/itemAPIService";
 
 export default function DisplayItemPage({ params }) {
   const { id } = params;
-
+  const { channel } = params;
   //const router = useRouter();
  // const {id} = router.query; // Extract the itemId from the URL
 
@@ -19,7 +19,7 @@ export default function DisplayItemPage({ params }) {
     if (id) {
       async function loadItem() {
         try {
-          const data = await fetchItemByIdAdmin(id); // Pass the id to the API function
+          const data = await fetchItemById(id,channel); // Pass the id to the API function
           setItem(data);
         } catch (err) {
           setError(err.message);

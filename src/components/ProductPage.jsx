@@ -66,7 +66,7 @@ function classNames(...classes) {
 }
 
 
-export default function Example( {data} ) {
+export default function Example( {data, dataDisplay} ) {
  
 
 
@@ -82,7 +82,11 @@ const [selectedColor, setSelectedColor] = useState(product.colors[0])
             <div className="lg:col-span-5 lg:col-start-8">
               <div className="flex justify-between">
                 <h1 className="text-xl font-medium text-gray-900">{data.itemName}</h1>
-                <p className="text-xl font-medium text-gray-900">{data.itemBasePrice}</p>
+                <p className="text-xl font-medium text-gray-900">
+          {data.uoms?.[0]?.manufacturerPricing?.pricingList
+            ? `$${data.uoms[0].manufacturerPricing.pricingList.toFixed(2)}`
+            : "Price not available"}
+        </p>
               </div>
           
             </div>
@@ -130,10 +134,14 @@ const [selectedColor, setSelectedColor] = useState(product.colors[0])
                 className="group relative block cursor-pointer rounded-lg border border-gray-300 p-4 focus:outline-none data-[focus]:ring-2 data-[focus]:ring-indigo-500"
               >
                 <p className="text-base font-medium text-gray-900">{uom.uomType}</p>
+                
                 <p className="mt-1 text-sm text-gray-500">
-                  {data.itemQuantity && uom.itemQuantity ? data.itemQuantity * uom.itemQuantity : 'N/A'}
+                  
                 </p>
-                <p className="mt-1 text-sm text-gray-500">{data.itemType}</p>
+                <p className="mt-1 text-sm text-gray-500">contain {uom.uomQuantity} {uom.uomSubType}</p>
+
+                <p className="mt-1 text-sm text-gray-500">Price $ {uom.manufacturerPricing.pricingList} </p>
+                <p className="mt-1 text-sm text-gray-500">Total weight {uom.uomWeight} </p>
                 <div
                   aria-hidden="true"
                   className="pointer-events-none absolute -inset-px rounded-lg border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-indigo-500"

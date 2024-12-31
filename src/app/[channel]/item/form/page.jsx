@@ -1,9 +1,6 @@
 "use client";
 import InputForm from"@/components/item/InputForm"
-
 export default function form() {
-    
-  
     return (
         
         
