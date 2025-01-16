@@ -13,6 +13,21 @@ export const fetchModelPictures = async () => {
     }
 };
 
+
+// Fetch all with paging
+export const fetchModelPicturesWithPaging = async (page = 0, size = 10) => {
+    try {
+        const response = await axios.get(`${API_URL}/model-pictures/all`, {
+            params: { page, size },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching uom pictures:", error);
+        throw error;
+    }
+};
+
+
 // Add new packaging
 export const addModelPicture= async (packagingData) => {
     try {
@@ -25,9 +40,9 @@ export const addModelPicture= async (packagingData) => {
 };
 
 // Update packaging
-export const updateModelPicture = async (id, updatedData) => {
+export const updateModelPicture = async (id, updatedModelPicture) => {
     try {
-        const response = await axios.put(`${API_URL}/model-pictures/${id}`, updatedData);
+        const response = await axios.put(`${API_URL}/model-pictures/${id}`, updatedModelPicture);
         return response.data;
     } catch (error) {
         console.error("Error updating packaging:", error);

@@ -13,6 +13,18 @@ export const fetchUom = async () => {
     }
 };
 
+export const fetchUomWithPaging = async (page = 0, size = 10) => {
+    try {
+        const response = await axios.get(`${API_URL}/uoms/all`, {
+            params: { page, size },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching uoms pictures:", error);
+        throw error;
+    }
+};
+
 // Add new packaging
 export const addUom = async (packagingData) => {
     try {
@@ -24,10 +36,10 @@ export const addUom = async (packagingData) => {
     }
 };
 
-// Update packaging
-export const updatePackaging = async (id, updatedData) => {
+// Update uom
+export const updateUom = async (id, updatedUom) => {
     try {
-        const response = await axios.put(`${API_URL}/uoms/${id}`, updatedData);
+        const response = await axios.put(`${API_URL}/uoms/${id}`, updatedUom);
         return response.data;
     } catch (error) {
         console.error("Error updating uom", error);
@@ -35,7 +47,7 @@ export const updatePackaging = async (id, updatedData) => {
     }
 };
 
-// Delete packaging
+// Delete uom
 export const deleteUom = async (id) => {
     try {
         const response = await axios.delete(`${API_URL}/uoms/${id}`);

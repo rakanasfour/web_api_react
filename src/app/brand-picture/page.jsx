@@ -1,23 +1,23 @@
 "use client";
 
-import Table from "@/components/model/Table";
+import Table from "@/components/brandpicture/Table"; // Adjust path if needed
 import { useEffect, useState } from "react";
-import { fetchModelsWithPaging } from "@/services/api/modelAPIService"; 
-export default function ModelPage() {
-  const [models, setModels] = useState([]);
+import { fetchBrandPictures } from "@/services/api/brandPictureAPIService";
+
+export default function BrandPicturePage() {
+  const [brandPictures, setBrandPictures] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(0); // Track current page
   const [totalPages, setTotalPages] = useState(1); // Total pages from backend
 
   useEffect(() => {
-    async function loadItems() {
+    async function loadBrandPictures() {
       setIsLoading(true);
       try {
-        const data = await fetchModelsWithPaging(); // Fetch data using the itemAPIService
-        setModels(data.content);
+        const data = await fetchBrandPictures(currentPage, 5); // Fetch with page and size
+        setBrandPictures(data.content); // Assuming backend returns `content` for items
         setTotalPages(data.totalPages); // Assuming backend returns `totalPages`
-
       } catch (err) {
         setError(err.message);
       } finally {
@@ -25,8 +25,9 @@ export default function ModelPage() {
       }
     }
 
-    loadItems();
-  }, [currentPage]);
+    loadBrandPictures();
+  }, [currentPage]); // Re-run on `currentPage` change
+
   const handleNextPage = () => {
     if (currentPage < totalPages - 1) {
       setCurrentPage((prevPage) => prevPage + 1);
@@ -44,7 +45,7 @@ export default function ModelPage() {
 
   return (
     <div>
-      <Table data={models} />
+      <Table data={brandPictures} />
       <div className="flex justify-between mt-4">
         <button
           onClick={handlePreviousPage}

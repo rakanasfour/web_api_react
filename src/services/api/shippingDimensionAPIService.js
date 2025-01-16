@@ -25,9 +25,9 @@ export const addShippingDimension = async (packagingData) => {
 };
 
 // Update packaging
-export const updateShippingDimension = async (id, updatedData) => {
+export const updateShippingDimension = async (id, updatedShippingDimension) => {
     try {
-        const response = await axios.put(`${API_URL}/packaging/${id}`, updatedData);
+        const response = await axios.put(`${API_URL}/packaging/${id}`, updatedShippingDimension);
         return response.data;
     } catch (error) {
         console.error("Error updating packaging:", error);

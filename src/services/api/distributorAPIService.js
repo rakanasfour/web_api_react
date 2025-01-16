@@ -24,10 +24,12 @@ export const addDistributor  = async (packagingData) => {
     }
 };
 
-// Update packaging
-export const updateDistributor   = async (id, updatedData) => {
+export const updateDistributor = async (id, updatedDistributor) => {
     try {
-        const response = await axios.put(`${API_URL}/distributors/${id}`, updatedData);
+        const response = await axios.put(
+            `${API_URL}/distributors/update/${id}`,
+            updatedDistributor // Pass the full object
+        );
         return response.data;
     } catch (error) {
         console.error("Error updating distributor:", error);
@@ -35,13 +37,11 @@ export const updateDistributor   = async (id, updatedData) => {
     }
 };
 
-// Delete packaging
-export const deleteDistributor  = async (id) => {
+  export const deleteDistributor = async (distributorId) => {
     try {
-        const response = await axios.delete(`${API_URL}/distributors/${id}`);
-        return response.data;
+      await axios.delete(`${API_URL}/distributors/${distributorId}`);
     } catch (error) {
-        console.error("Error deleting distributor :", error);
-        throw error;
+      console.error("Error deleting class:", error);
+      throw error;
     }
-};
+  };

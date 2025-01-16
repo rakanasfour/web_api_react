@@ -2,13 +2,72 @@
 "use client";
 
 import { useRouter } from "next/navigation"; 
+import { useState } from "react";
+import { updateItem, deleteItem } from "@/services/api/itemAPIService";
 
-export default function Example({ data }) {
+export default function Example({ data: initialData }) {
 
   const router = useRouter();
   const handleClick = () => {
       router.push("/item/form");
     };
+
+    const [data, setData] = useState(initialData);
+    const [editingRow, setEditingRow] = useState(null);
+    const [updatedValue, setUpdatedValue] = useState({
+      itemName: "",
+      itemSku: "",
+      itemDescription: "",
+      itemStatus: "",
+      modelId:""
+    });
+
+    const handleEditClick = (item) => {
+      setEditingRow(item.itemId);
+      setUpdatedValue({
+        itemName: item.itemName,
+        itemSku: item.itemSku,
+        itemDescription: item.itemDescription,
+        itemStatus: item.itemStatus,
+        modelId: item.modelId
+      });
+    };
+
+
+    const handleSaveClick = async (itemId) => {
+      try {
+        await updateItem(itemId, updatedValue);
+        setData((prevData) =>
+          prevData.map((item) =>
+            item.itemId === itemId
+              ? { ...item, ...updatedValue }
+              : item
+          )
+        );
+      } catch (error) {
+        console.error("Error updating item:", error);
+      } finally {
+        setEditingRow(null);
+      }
+    };
+
+
+    const handleDeleteClick = async (itemId) => {
+      const userConfirmed = window.confirm("Are you sure you want to delete this distributor?");
+      if (!userConfirmed) {
+        return; // Exit if the user cancels
+      }
+  
+      try {
+        await deleteItem(itemId);
+        setData((prevData) =>
+          prevData.filter((item) => item.itemId !== itemId)
+        );
+      } catch (error) {
+        console.error("Error deleting item:", error);
+      }
+    };
+
 
 
   return (
@@ -45,6 +104,16 @@ export default function Example({ data }) {
                   <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
                    Sku
                   </th>
+
+                  <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
+                  item Description
+                  </th>
+
+                  <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
+                  model Id
+                  </th>
+
+
                   <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
                    Quantity Available
                   </th>
@@ -75,20 +144,83 @@ export default function Example({ data }) {
                       ))}
                     </div>
                   </td>
+
+
+                  <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+                      {editingRow === item.itemId ? (
+                        <input
+                          type="text"
+                          className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          value={updatedValue.itemName}
+                          onChange={(e) =>
+                            setUpdatedValue((prev) => ({ ...prev, itemName: e.target.value }))
+                          }
+                        />
+                      ) : (
+                        <div className="text-gray-900">{item.itemName}</div>
+                      )}
+                    </td>
+
+
+
+                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+                      {editingRow === item.itemId ? (
+                        <input
+                          type="text"
+                          className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          value={updatedValue.itemSku}
+                          onChange={(e) =>
+                            setUpdatedValue((prev) => ({ ...prev, itemSku: e.target.value }))
+                          }
+                        />
+                      ) : (
+                        <div className="text-gray-900">{item.itemSku}</div>
+                      )}
+                    </td>
+
+
+                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+                      {editingRow === item.itemId ? (
+                        <input
+                          type="text"
+                          className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          value={updatedValue.itemDescription}
+                          onChange={(e) =>
+                            setUpdatedValue((prev) => ({ ...prev, itemDescription: e.target.value }))
+                          }
+                        />
+                      ) : (
+                        <div className="text-gray-900">{item.itemDescription}</div>
+                      )}
+                    </td>
+
+                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+                      {editingRow === item.itemId ? (
+                        <input
+                          type="text"
+                          className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          value={updatedValue.modelId}
+                          onChange={(e) =>
+                            setUpdatedValue((prev) => ({ ...prev, modelId: e.target.value }))
+                          }
+                        />
+                      ) : (
+                        <div className="text-gray-900">{item.modelId}</div>
+                      )}
+                    </td>
       
-                  <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                    <div className="text-gray-900">{item.itemName}</div>
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                    <div className="text-gray-900">{item.itemSku}</div>
-                  </td>
+
 
 
                   <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
                   {item.uoms.map((uom) => (
                     <div key={uom.uomId} className="text-gray-900">{uom.uomType}</div>
+
                   ))}
                   </td>
+
+
+
 
 
                   <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
@@ -98,13 +230,28 @@ export default function Example({ data }) {
                       <div className="text-gray-500">N/A</div>
                     )}
                   </td>
+
+
                   
-      
+
+
                   <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                    <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                      {item.itemStatus}
-                    </span>
-                  </td>
+                      {editingRow === item.itemId ? (
+                        <input
+                          type="text"
+                          className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          value={updatedValue.itemStatus}
+                          onChange={(e) =>
+                            setUpdatedValue((prev) => ({ ...prev, itemStatus: e.target.value }))
+                          }
+                        />
+                      ) : (
+                        <div className="text-gray-900">{item.itemStatus}</div>
+                      )}
+                    </td>
+
+                    
+
                   <td className="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                     <a
                       href={`item/display/${item.itemId}`}
@@ -113,11 +260,31 @@ export default function Example({ data }) {
                       Select
                     </a>
                   </td>
+
                   <td className="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                    <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                      Edit
-                    </a>
-                  </td>
+                      {editingRow === item.itemId ? (
+                        <button
+                          onClick={() => handleSaveClick(item.itemId)}
+                          className="text-green-600 hover:text-green-900 mr-2"
+                        >
+                          Save
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleEditClick(item)}
+                          className="text-indigo-600 hover:text-indigo-900 mr-2"
+                        >
+                          Edit
+                        </button>
+                      )}
+                      <button
+                        onClick={() => handleDeleteClick(item.itemId)}
+                        className="text-red-600 hover:text-red-900"
+                      >
+                        Delete
+                      </button>
+                    </td>
+
                 </tr>
               ))}
             </tbody>

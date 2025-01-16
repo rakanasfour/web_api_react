@@ -13,6 +13,20 @@ export const fetchUomPictures = async () => {
     }
 };
 
+// Fetch all with paging
+export const fetchUomPicturesWithPagin = async (page = 0, size = 10) => {
+    try {
+        const response = await axios.get(`${API_URL}/uom-pictures/all`, {
+            params: { page, size },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching uom pictures:", error);
+        throw error;
+    }
+};
+
+
 // Add new packaging
 export const addUomPicture = async (packagingData) => {
     try {
@@ -25,9 +39,9 @@ export const addUomPicture = async (packagingData) => {
 };
 
 // Update packaging
-export const updateUomPicture = async (id, updatedData) => {
+export const updateUomPicture = async (id, updatedUomPicture) => {
     try {
-        const response = await axios.put(`${API_URL}/uom-pictures/${id}`, updatedData);
+        const response = await axios.put(`${API_URL}/uom-pictures/${id}`, updatedUomPicture);
         return response.data;
     } catch (error) {
         console.error("Error updating UomPicture:", error);

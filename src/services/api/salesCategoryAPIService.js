@@ -25,9 +25,9 @@ export const addSalesCategory = async (packagingData) => {
 };
 
 // Update packaging
-export const updateSalesCategory = async (id, updatedData) => {
+export const updateSalesCategory = async (id, updatedSalesCategory) => {
     try {
-        const response = await axios.put(`${API_URL}/sales-categories/${id}`, updatedData);
+        const response = await axios.put(`${API_URL}/sales-categories/${id}`, updatedSalesCategory);
         return response.data;
     } catch (error) {
         console.error("Error updating sales category:", error);

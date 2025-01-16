@@ -12,6 +12,27 @@ export const fetchItemsAdmin = async () => {
     }
 };
 
+export const fetchItemsAdminWithpaging = async (page = 0, size = 5) => {
+    try {
+        const response = await axios.get(API_URL+"api/items/all",{
+            params: { page, size },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching people:", error);
+        throw error;
+    }
+};
+
+/*
+export async function getServerSideProps(context) {
+    const page = context.query.page || 1;
+    const res = await fetch(API_URL+"api/items/test?page=${page}&size=20");
+    const items = await res.json();
+    return { props: { items } };
+}
+*/
+
 export const fetchItemsChannel = async (channel) => {
     try {
         const response = await axios.get(`${API_URL}${channel}/api/items`);
@@ -33,27 +54,26 @@ export const addItem = async (packagingData) => {
     }
 };
 
-// Update packaging
-export const updateItem = async (id, updatedData) => {
+export const updateItem = async (id, updatedItem) => {
     try {
-        const response = await axios.put(`${API_URL}api/items/${id}`, updatedData);
+        const response = await axios.put(
+            `${API_URL}api/items/update/${id}`, updatedItem // Pass the full object
+        );
         return response.data;
     } catch (error) {
-        console.error("Error updating items", error);
+        console.error("Error updating item:", error);
         throw error;
     }
 };
 
-// Delete packaging
-export const deleteItem= async (id) => {
+  export const deleteItem = async (itemId) => {
     try {
-        const response = await axios.delete(`${API_URL}api/items/${id}`);
-        return response.data;
+      await axios.delete(`${API_URL}items/${itemId}`);
     } catch (error) {
-        console.error("Error deleting Item", error);
-        throw error;
+      console.error("Error deleting items", error);
+      throw error;
     }
-};
+  };
 
 export const fetchItemById = async (id,channel) => {
     try {

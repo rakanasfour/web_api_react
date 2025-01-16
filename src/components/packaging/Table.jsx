@@ -1,12 +1,66 @@
 "use client";
 
 import { useRouter } from "next/navigation"; 
+import { useState } from "react";
+import { updatePackaging, deletePackaging } from "@/services/api/packagingAPIService";
 
-export default function Example({ data }) {
+export default function Example({ data: initialData }) {
+  
     const router = useRouter();
+    const [data, setData] = useState(initialData);
+    const [editingRow, setEditingRow] = useState(null);
+    const [updatedValue, setUpdatedValue] = useState({
+      packagingType: ""
+    });
+
     const handleClick = () => {
-        router.push("/packaging/form");
-      };
+      router.push("/packaging/form");
+    };
+
+    const handleEditClick = (packaging) => {
+      setEditingRow(packaging.packagingId);
+      setUpdatedValue({
+        packagingType: packaging.packagingType
+        
+      });
+    };
+
+
+    const handleSaveClick = async (packagingId) => {
+      try {
+        await updatePackaging(packagingId, updatedValue);
+        setData((prevData) =>
+          prevData.map((packaging) =>
+            packaging.packagingId === packagingId
+              ? { ...packaging, ...updatedValue }
+              : packaging
+          )
+        );
+      } catch (error) {
+        console.error("Error updating packaging:", error);
+      } finally {
+        setEditingRow(null);
+      }
+    };
+
+
+    const handleDeleteClick = async (packagingId) => {
+      const userConfirmed = window.confirm("Are you sure you want to delete this distributor?");
+      if (!userConfirmed) {
+        return; // Exit if the user cancels
+      }
+  
+      try {
+        await deletePackaging(packagingId);
+        setData((prevData) =>
+          prevData.filter((packaging) => packaging.packagingId !== packagingId)
+        );
+      } catch (error) {
+        console.error("Error deleting distributor:", error);
+      }
+    };
+  
+
     return (
       <div className="px-4 sm:px-6 lg:px-8">
         <div className="sm:flex sm:items-center">
@@ -52,15 +106,53 @@ export default function Example({ data }) {
                       <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
                         <div className="text-gray-900">{packaging.packagingId}</div>
                       </td>
+
+
                       <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+                      {editingRow === packaging.packagingId ? (
+                        <input
+                          type="text"
+                          className="block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          value={updatedValue.packagingType}
+                          onChange={(e) =>
+                            setUpdatedValue((prev) => ({ ...prev, packagingType: e.target.value }))
+                          }
+                        />
+                      ) : (
                         <div className="text-gray-900">{packaging.packagingType}</div>
-                      </td>
-         
-                      <td className="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                      )}
+                    </td>
+
+
+                    <td className="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                      {editingRow === packaging.packagingId ? (
+                        <button
+                          onClick={() => handleSaveClick(packaging.packagingId)}
+                          className="text-green-600 hover:text-green-900 mr-2"
+                        >
+                          Save
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleEditClick(packaging)}
+                          className="text-indigo-600 hover:text-indigo-900 mr-2"
+                        >
                           Edit
-                        </a>
-                      </td>
+                        </button>
+                      )}
+                      <button
+                        onClick={() => handleDeleteClick(packaging.packagingId)}
+                        className="text-red-600 hover:text-red-900"
+                      >
+                        Delete
+                      </button>
+                    </td>
+
+
+
+
+
+               
                     </tr>
                   ))}
                 </tbody>

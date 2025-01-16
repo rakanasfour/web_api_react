@@ -25,9 +25,9 @@ export const addManufacturerPricing = async (packagingData) => {
 };
 
 // Update manufacturer
-export const updateManufacturerPricing = async (id, updatedData) => {
+export const updateManufacturerPricing = async (id, updatedManufacturerPricing) => {
     try {
-        const response = await axios.put(`${API_URL}/manufacturer-pricing/${id}`, updatedData);
+        const response = await axios.put(`${API_URL}/manufacturer-pricing/${id}`, updatedManufacturerPricing );
         return response.data;
     } catch (error) {
         console.error("Error updating manufacturer-pricing", error);
@@ -35,7 +35,7 @@ export const updateManufacturerPricing = async (id, updatedData) => {
     }
 };
 
-// Delete manufacturer
+// Delete manufManufacturer Pricing
 export const deleteManufacturerPricing = async (id) => {
     try {
         const response = await axios.delete(`${API_URL}/manufacturer-pricing/${id}`);
@@ -45,3 +45,4 @@ export const deleteManufacturerPricing = async (id) => {
         throw error;
     }
 };
+

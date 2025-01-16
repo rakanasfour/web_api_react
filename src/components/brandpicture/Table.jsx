@@ -56,19 +56,10 @@ export default function Example({ data }) {
                   <tr key={brand.brandId}>
                     
                     <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <div className="text-gray-900">{brand.brandName}</div>
+                      <div className="text-gray-900">{brand.brandPictureName}</div>
                     </td>
                     <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <div className="text-gray-900">{brand.brandDescription}</div>
-                    </td>
- 
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                      {brand.brandStatus}
-                      </span>
-                    </td>
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <div className="text-gray-900">{brand.manufacturerId}</div>
+                      <div className="text-gray-900">{brand.brandPictureLink}</div>
                     </td>
       
                     <td className="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">

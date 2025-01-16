@@ -13,6 +13,19 @@ export const fetchModel= async () => {
     }
 };
 
+export const fetchModelsWithPaging = async (page = 0, size = 10) => {
+    try {
+        const response = await axios.get(`${API_URL}/models/all`, {
+            params: { page, size },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching brand pictures:", error);
+        throw error;
+    }
+};
+
+
 // Add new packaging
 export const addModel = async (packagingData) => {
     try {
@@ -24,24 +37,24 @@ export const addModel = async (packagingData) => {
     }
 };
 
-// Update packaging
-export const updateModel = async (id, updatedData) => {
+// Update model
+export const updateModel = async (id, updateModel) => {
     try {
-        const response = await axios.put(`${API_URL}/models/${id}`, updatedData);
+        const response = await axios.put(`${API_URL}/models/update/${id}`, updateModel);
         return response.data;
     } catch (error) {
-        console.error("Error updating packaging:", error);
+        console.error("Error updating model:", error);
         throw error;
     }
 };
 
-// Delete packaging
+// Delete model
 export const deleteModel = async (id) => {
     try {
         const response = await axios.delete(`${API_URL}/models/${id}`);
         return response.data;
     } catch (error) {
-        console.error("Error deleting packaging:", error);
+        console.error("Error deleting model:", error);
         throw error;
     }
 };

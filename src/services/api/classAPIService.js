@@ -13,6 +13,26 @@ export const fetchClasses = async () => {
     }
 };
 
+
+export const updateClass = async (classId, updatedValue) => {
+    try {
+      const response = await axios.put(`${API_URL}/classes/update/${classId}`, { className: updatedValue });
+      return response.data;
+    } catch (error) {
+      console.error("Error updating class:", error);
+      throw error;
+    }
+  };
+  
+  export const deleteClass = async (classId) => {
+    try {
+      await axios.delete(`${API_URL}/classes/${classId}`);
+    } catch (error) {
+      console.error("Error deleting class:", error);
+      throw error;
+    }
+  };
+
 // Add new packaging
 export const addSalesCategory = async (packagingData) => {
     try {

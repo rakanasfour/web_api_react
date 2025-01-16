@@ -13,8 +13,8 @@ export default function form() {
             alert("class created Successfully !");
 
         } catch (error){
-            console.error("error created Manufacturer facilites:", error);
-            alert("Failed to created the manufacturer. Please try again.");
+            console.error("error created class :", error);
+            alert("Failed to created the class. Please try again.");
         }
     };
     return (

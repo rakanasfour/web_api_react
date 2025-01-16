@@ -14,6 +14,21 @@ export const fetchUser = async () => {
     }
 };
 
+
+// Fetch all with paging
+export const fetchUserPaging = async (page = 0, size = 10) => {
+    try {
+        const response = await axios.get(`${API_URL}/users/all`, {
+            params: { page, size },
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching users:", error);
+        throw error;
+    }
+};
+
+
 // Add new packaging
 export const addUser = async (packagingData) => {
     try {
@@ -26,9 +41,9 @@ export const addUser = async (packagingData) => {
 };
 
 // Update packaging
-export const updateUser = async (id, updatedData) => {
+export const updateUser = async (id, updatedUser) => {
     try {
-        const response = await axios.put(`${API_URL}/users/${id}`, updatedData);
+        const response = await axios.put(`${API_URL}/users/${id}`, updatedUser);
         return response.data;
     } catch (error) {
         console.error("Error updating user:", error);

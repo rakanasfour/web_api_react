@@ -13,6 +13,9 @@ export const fetchItemPictures = async () => {
     }
 };
 
+
+
+
 // Add new packaging
 export const addItemPicture = async (packagingData) => {
     try {
@@ -24,24 +27,38 @@ export const addItemPicture = async (packagingData) => {
     }
 };
 
-// Update packaging
-export const updateItemPicture  = async (id, updatedData) => {
+export const fetchItemsPicturesWithpaging = async (page = 0, size = 5) => {
     try {
-        const response = await axios.put(`${API_URL}/item-pictures/${id}`, updatedData);
+        const response = await axios.get(API_URL+"/item-pictures/all",{
+            params: { page, size },
+        });
         return response.data;
     } catch (error) {
-        console.error("Error updating packaging:", error);
+        console.error("Error fetching people:", error);
         throw error;
     }
 };
 
-// Delete packaging
-export const deleteItemPicture  = async (id) => {
+
+
+export const updateItemPicture = async (id, updatedItemPicture) => {
     try {
-        const response = await axios.delete(`${API_URL}/item-pictures/${id}`);
+        const response = await axios.put(
+            `${API_URL}/item-picture/update/${id}`,
+            updatedItemPicture // Pass the full object
+        );
         return response.data;
     } catch (error) {
-        console.error("Error deleting packaging:", error);
+        console.error("Error updating item picture:", error);
         throw error;
     }
 };
+
+  export const deleteItemPicture= async (itemPictureId) => {
+    try {
+      await axios.delete(`${API_URL}/item-picture/${itemPictureId}`);
+    } catch (error) {
+      console.error("Error deleting item-picture", error);
+      throw error;
+    }
+  };

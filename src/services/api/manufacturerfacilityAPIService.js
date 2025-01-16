@@ -24,10 +24,10 @@ export const addManufacturerFacility = async (packagingData) => {
     }
 };
 
-// Update manufacturer
-export const updateManufacturerFacility = async (id, updatedData) => {
+// Update Manufacturer Facility
+export const updateManufacturerFacility = async (id, updatedManufacturerFcilities) => {
     try {
-        const response = await axios.put(`${API_URL}/manufacturer-facilities/${id}`, updatedData);
+        const response = await axios.put(`${API_URL}/manufacturer-facilities/${id}`, updatedManufacturerFcilities);
         return response.data;
     } catch (error) {
         console.error("Error updating manufacturer-facilities", error);
@@ -35,13 +35,14 @@ export const updateManufacturerFacility = async (id, updatedData) => {
     }
 };
 
-// Delete manufacturer
-export const deleteManufacturerFacility = async (id) => {
+// Delete Manufacturer Facility
+export const deleteManufacturerFacility = async (facilityId) => {
     try {
-        const response = await axios.delete(`${API_URL}/manufacturer-facilities/${id}`);
+        const response = await axios.delete(`${API_URL}/manufacturer-facilities/${facilityId}`);
         return response.data;
     } catch (error) {
         console.error("Error deleting manufacturer facilities:", error);
         throw error;
     }
 };
+

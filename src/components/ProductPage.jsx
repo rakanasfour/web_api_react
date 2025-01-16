@@ -3,6 +3,8 @@ import { useState } from 'react'
 import { StarIcon } from '@heroicons/react/20/solid'
 import { Radio, RadioGroup } from '@headlessui/react'
 import { CurrencyDollarIcon, GlobeAmericasIcon } from '@heroicons/react/24/outline'
+import ImageComponent from "@/components/ImageComponent"
+
 import Head from 'next/head'
 const product = {
   name: 'Basic Tee',
@@ -97,17 +99,23 @@ const [selectedColor, setSelectedColor] = useState(product.colors[0])
 
               <div className="grid grid-cols-1 lg:grid-cols-2 lg:grid-rows-3 lg:gap-8">
                 {data.itemPictures.map((itemPicture) => (
-                  <img
-                    key={itemPicture.itemPictureId}
-                    alt={itemPicture.itemPictureMain}
-                    src={itemPicture.itemPictureMain}
-                    className={classNames(
-                      itemPicture.itemPictureMain ? 'lg:col-span-2 lg:row-span-2' : 'hidden lg:block',
-                      'rounded-lg',
-                    )}
-                  />
+                  // <img
+                  //   key={itemPicture.itemPictureId}
+                  //   alt={itemPicture.itemPictureMain}
+                  //   src={itemPicture.itemPictureMain}
+                  //   className={classNames(
+                  //     itemPicture.itemPictureMain ? 'lg:col-span-2 lg:row-span-2' : 'hidden lg:block',
+                  //     'rounded-lg',
+                  //   )}
+                 // />
+                  <ImageComponent key={itemPicture.itemPictureId} data={itemPicture}></ImageComponent>
+
                 ))}
+
+
+                
               </div>
+
             </div>
 
             <div className="mt-8 lg:col-span-5">
@@ -140,7 +148,7 @@ const [selectedColor, setSelectedColor] = useState(product.colors[0])
                 </p>
                 <p className="mt-1 text-sm text-gray-500">contain {uom.uomQuantity} {uom.uomSubType}</p>
 
-                <p className="mt-1 text-sm text-gray-500">Price $ {uom.manufacturerPricing.pricingList} </p>
+                {/* <p className="mt-1 text-sm text-gray-500">Price $ {uom.manufacturerPricing.pricingList} </p> */}
                 <p className="mt-1 text-sm text-gray-500">Total weight {uom.uomWeight} </p>
                 <div
                   aria-hidden="true"

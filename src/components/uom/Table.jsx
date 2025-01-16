@@ -86,7 +86,7 @@ export default function Example({ data }) {
                       <div className="text-gray-900">{uom.shippingDimensionId}</div>
                     </td>
                     <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
-                      <div className="text-gray-900">{uom.packagingId.packagingId}</div>
+                     {/* <div className="text-gray-900">{uom.packagingId.packagingId}</div> */}
                     </td>
               
                     <td className="relative whitespace-nowrap py-5 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">

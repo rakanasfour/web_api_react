@@ -24,24 +24,24 @@ export const addDocumentStorage = async (packagingData) => {
     }
 };
 
-// Update packaging
-export const updateDocumentStorage = async (id, updatedData) => {
+export const updateDocumentStorage = async (id, updatedDocumentStorage) => {
     try {
-        const response = await axios.put(`${API_URL}/document-storage/${id}`, updatedData);
+        const response = await axios.put(
+            `${API_URL}/document-storage/update/${id}`,
+            updatedDocumentStorage // Pass the full object
+        );
         return response.data;
     } catch (error) {
-        console.error("Error updating document-storage:", error);
+        console.error("Error updating DocumentStorage:", error);
         throw error;
     }
 };
 
-// Delete packaging
-export const deleteDocumentStorage = async (id) => {
+  export const deleteDocumentStorage = async (documentStorageId) => {
     try {
-        const response = await axios.delete(`${API_URL}/document-storage/${id}`);
-        return response.data;
+      await axios.delete(`${API_URL}/document-storage/${documentStorageId}`);
     } catch (error) {
-        console.error("Error deleting document storage:", error);
-        throw error;
+      console.error("Error deleting DocumentStorage:", error);
+      throw error;
     }
-};
+  };

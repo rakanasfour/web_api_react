@@ -2,30 +2,18 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:8080/api';
 
-// Fetch all packaging
-export const fetchBrand = async () => {
-    try {
-        const response = await axios.get(`${API_URL}/brands`);
-        return response.data;
-    } catch (error) {
-        console.error("Error fetching packaging:", error);
-        throw error;
-    }
-};
-
 // Fetch all with paging
-export const fetchBrandWithPaging = async (page = 0, size = 10) => {
+export const fetchBrandPictures = async (page = 0, size = 10) => {
     try {
-        const response = await axios.get(`${API_URL}/brands/all`, {
+        const response = await axios.get(`${API_URL}/brand-picture`, {
             params: { page, size },
         });
         return response.data;
     } catch (error) {
-        console.error("Error fetching brand:", error);
+        console.error("Error fetching brand pictures:", error);
         throw error;
     }
 };
-
 
 // Add new packaging
 export const addPackaging = async (packagingData) => {

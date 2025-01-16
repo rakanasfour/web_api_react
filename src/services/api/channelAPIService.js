@@ -24,10 +24,12 @@ export const addChannel  = async (packagingData) => {
     }
 };
 
-// Update packaging
-export const updateChannel   = async (id, updatedData) => {
+export const updateChannel = async (id, updatedChannel) => {
     try {
-        const response = await axios.put(`${API_URL}/channels/${id}`, updatedData);
+        const response = await axios.put(
+            `${API_URL}/channels/update/${id}`,
+            updatedChannel // Pass the full object
+        );
         return response.data;
     } catch (error) {
         console.error("Error updating channel:", error);
@@ -35,13 +37,11 @@ export const updateChannel   = async (id, updatedData) => {
     }
 };
 
-// Delete packaging
-export const deleteChannel   = async (id) => {
+  export const deleteChannel = async (channelId) => {
     try {
-        const response = await axios.delete(`${API_URL}/channels/${id}`);
-        return response.data;
+      await axios.delete(`${API_URL}/channels/${channelId}`);
     } catch (error) {
-        console.error("Error deleting channel :", error);
-        throw error;
+      console.error("Error deleting channel:", error);
+      throw error;
     }
-};
+  };

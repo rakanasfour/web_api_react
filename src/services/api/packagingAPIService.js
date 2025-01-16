@@ -25,9 +25,9 @@ export const addPackaging = async (packagingData) => {
 };
 
 // Update packaging
-export const updatePackaging = async (id, updatedData) => {
+export const updatePackaging = async (id, updatedPackaging) => {
     try {
-        const response = await axios.put(`${API_URL}/packaging/${id}`, updatedData);
+        const response = await axios.put(`${API_URL}/packaging/update/${id}`, updatedPackaging);
         return response.data;
     } catch (error) {
         console.error("Error updating packaging:", error);

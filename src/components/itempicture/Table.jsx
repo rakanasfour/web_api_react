@@ -3,7 +3,7 @@
 "use client";
 
 import { useRouter } from "next/navigation"; 
-
+import ImageComponent from "@/components/ImageComponent"
 export default function Example({ data }) {
   const router = useRouter();
   const handleClick = () => {
@@ -51,9 +51,13 @@ export default function Example({ data }) {
                 {data.map((itemPicture) => (
                   <tr key={itemPicture.itemPictureId}>
                     
-                    <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
+                    {/* <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
                       <div className="text-gray-900">{itemPicture.itemPictureMain}</div>
-                    </td>
+                    </td> */}
+
+                    <ImageComponent data={itemPicture}></ImageComponent>
+
+                    
                     <td className="whitespace-nowrap px-3 py-5 text-sm text-gray-500">
                       <div className="text-gray-900">{itemPicture.itemId}</div>
                     </td>

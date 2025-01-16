@@ -25,7 +25,7 @@ export default function Example() {
               </div>
             </div>
 
-            <div className="sm:col-span-3">
+            <div className="sm:col-span-2">
               <label htmlFor="uomLevel" className="block text-sm/6 font-medium text-gray-900">
               uom Level
               </label>
@@ -56,7 +56,7 @@ export default function Example() {
               <p className="mt-3 text-sm/6 text-gray-600">please describe the item.</p>
             </div>
 
-            <div className="sm:col-span-1">
+            <div className="sm:col-span-2">
               <label htmlFor="uomManufacturerBarcode" className="block text-sm/6 font-medium text-gray-900">
               uom Manufacturer Barcode
               </label>
@@ -87,7 +87,7 @@ export default function Example() {
               </div>
             </div>
 
-            <div className="sm:col-span-1">
+            <div className="sm:col-span-2">
               <label htmlFor="shippingDimensionId" className="block text-sm/6 font-medium text-gray-900">
               shipping Dimension Id
               </label>
@@ -104,7 +104,7 @@ export default function Example() {
 
 
 
-            <div className="sm:col-span-1">
+            <div className="sm:col-span-">
               <label htmlFor="packagingId" className="block text-sm/6 font-medium text-gray-900">
               packagingId
               </label>
